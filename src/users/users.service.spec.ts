@@ -98,9 +98,9 @@ describe('UsersService', () => {
 
       // cada objeto fica em um slot separado da memoria
       // Assertion - valida o teste e mostra o resultado
-
+      
       expect(returnedOneUser).toEqual({
-        id: 1,
+        id : 1,
         nome: "Luffy",
         idade: 18,
       })
@@ -142,18 +142,17 @@ describe('UsersService', () => {
       // userCreated é o resultado do teste
       usersService.create(userDto);
       const beforDeleteUser = usersService.findOne(1);
-
+      
       usersService.remove(1);
       const deleteUser = usersService.findOne(1);
 
-
+      
       // cada objeto fica em um slot separado da memoria
       // Assertion - valida o teste e mostra o resultado
 
       expect(beforDeleteUser).not.toBeUndefined();
       expect(deleteUser).toBeUndefined();
-
     })
-  })
+  }) 
 
 });
