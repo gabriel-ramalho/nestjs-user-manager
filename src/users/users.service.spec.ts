@@ -1,4 +1,3 @@
-import { describe } from 'node:test';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
@@ -52,7 +51,7 @@ describe('UsersService', () => {
       expect(userCreated2.nome).toBe("Biela");
     });
   });
-/*
+
   describe('findAll', () => {
     it('should return all users created', async () => {
       // Setup - cria o ambiente do teste
@@ -99,9 +98,14 @@ describe('UsersService', () => {
 
       // cada objeto fica em um slot separado da memoria
       // Assertion - valida o teste e mostra o resultado
-      
-      expect(returnedOneUser.id).toBe(1);
+
+      expect(returnedOneUser).toEqual({
+        id: 1,
+        nome: "Luffy",
+        idade: 18,
+      })
     });
+
   });
   describe('update', () => {
     it('should update a user', async () => {
@@ -109,25 +113,24 @@ describe('UsersService', () => {
       const userDto = new CreateUserDto();
       userDto.idade = 50;
       userDto.nome = "Vander";
-      const updateUserDto = new UpdateUserDto;
-
+      const updateUserDto = new UpdateUserDto();
+      updateUserDto.nome = "Vanderson";
       // Execution - executa o teste
       // userCreated é o resultado do teste
       usersService.create(userDto);
       usersService.findOne(1);
-      const updatedName = usersService.update(1, updateUserDto);{
-        nome : 'Vanderson' ;
-      };
-      const updatedUser = {
-        ...userDto,
-        ...updatedName,
-      }
+      const updatedUser = usersService.update(1, updateUserDto);
+
       // cada objeto fica em um slot separado da memoria
       // Assertion - valida o teste e mostra o resultado
 
-      expect(updatedUser.nome).toBe('Vanderson')
-    })
-  })
+      expect(updatedUser).toEqual({
+        id: 1,
+        nome: "Vanderson",
+        idade: 50
+      });
+    });
+  });
   describe('delete', () => {
     it('should delete a user', async () => {
       // Setup - cria o ambiente do teste
@@ -138,14 +141,19 @@ describe('UsersService', () => {
       // Execution - executa o teste
       // userCreated é o resultado do teste
       usersService.create(userDto);
-      usersService.findOne(1);
-      const deleteUser = usersService.remove(1);
-      
+      const beforDeleteUser = usersService.findOne(1);
+
+      usersService.remove(1);
+      const deleteUser = usersService.findOne(1);
+
+
       // cada objeto fica em um slot separado da memoria
       // Assertion - valida o teste e mostra o resultado
 
-      expect(deleteUser).toBe(true);
+      expect(beforDeleteUser).not.toBeUndefined();
+      expect(deleteUser).toBeUndefined();
+
     })
-  }) 
-*/
+  })
+
 });
